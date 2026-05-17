@@ -1,7 +1,24 @@
-import {app} from "./src/app"
+import "dotenv/config";
 
-const PORT = process.env.PORT || 4000;
+import dns from "node:dns";
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+import { app } from "./src/app.js";
+
+const PORT = Number(process.env.PORT) || 4000;
+
+const server = app.listen(PORT);
+
+server.on("listening", () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+server.on("error", (err: NodeJS.ErrnoException) => {
+  if (err.code === "EADDRINUSE") {
+    console.error(
+      `Port ${PORT} is already in use. Stop the other process (e.g. old node.exe) and restart.`
+    );
+    process.exit(1);
+  }
+  throw err;
 });
