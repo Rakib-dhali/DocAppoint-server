@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllDoctors, getDoctorById, getTopRatedDoctors, createAppointment, myAppoinments, deleteAppointment } from "../controllers/controller.js";
+import { getAllDoctors, getDoctorById, getTopRatedDoctors, createAppointment, deleteAppointment, updateAppointment, getAppointmentById } from "../controllers/controller.js";
 
 const routes = Router();
 
@@ -8,8 +8,9 @@ routes.get("/top-doctors", getTopRatedDoctors);
 routes.get("/doctors/:id", getDoctorById);
 
 routes.post("/create-appointment", createAppointment);
-routes.get("/appointments/my", myAppoinments);
-routes.get("/appointments/:id", deleteAppointment);
+routes.get("/appointments/:id", getAppointmentById);
+routes.patch("/appointments/:id", updateAppointment);
+routes.delete("/appointments/:id", deleteAppointment);
 
 
 

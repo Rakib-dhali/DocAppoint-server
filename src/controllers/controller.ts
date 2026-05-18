@@ -37,16 +37,11 @@ export async function getDoctorById(req: Request, res: Response) {
 
 export async function createAppointment(req: Request, res: Response) {
     const appointments = await appointmentCollection.insertOne(req.body)
-    res.status(201).json(appointments)
-}
-export async function myAppoinments(req: Request, res: Response) {
-    const myAppointment = await appointmentCollection.find({ userEmail: req.user!.email  }).toArray()
-      res.json(myAppointment)
+    res.status(201).json(appointments);
 }
 
 export async function getAppointmentById(req: Request, res: Response) {
-    const { id } = req.params;
-    const appointment = await appointmentCollection.findOne({ id: id });
+    const appointment = await appointmentCollection.findOne({ _id: new ObjectId(req.params.id as string)});
 
     if (!appointment) {
       res.status(404).json({ message: "Appointment not found" });
@@ -55,6 +50,16 @@ export async function getAppointmentById(req: Request, res: Response) {
 
     res.status(200).json(appointment);
 }
+
+export async function updateAppointment(req: Request, res: Response) {
+  const id = req.params.id as string;
+  const result = await appointmentCollection.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: req.body }
+  )
+  res.json(result)
+}
+
 export async function deleteAppointment(req: Request, res: Response) {
     const result = await appointmentCollection.deleteOne({
         _id: new ObjectId(req.params.id as string)
