@@ -1,17 +1,22 @@
-import mongoose from "mongoose";
+import dns from "node:dns";
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
-export const connectDB = async () => {
-    try {
-        mongoose.connection.on("connected", () => {
-            console.log("MongoDB connected");
-        });
+import dotenv from "dotenv";
+dotenv.config();
 
-        mongoose.connection.on("error", (err) => {
-            console.error("MongoDB error:", err);
-        });
+import { MongoClient, ServerApiVersion } from "mongodb";
 
-        await mongoose.connect(process.env.MONGO_URI as string);
-    } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
-    }
+export const client = new MongoClient(process.env.MONGO_URI!, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
+
+const connectDB = async () => {
+  await client.connect();
+  console.log("mongoDb connected");
 };
+
+export default connectDB;

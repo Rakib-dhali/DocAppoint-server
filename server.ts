@@ -1,11 +1,12 @@
-import "dotenv/config";
-
 import dns from "node:dns";
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
+
+
+
 import { app } from "./src/app.js";
 
-const PORT = Number(process.env.PORT) || 4000;
+const PORT =4000;
 
 const server = app.listen(PORT);
 
