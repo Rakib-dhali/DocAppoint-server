@@ -1,111 +1,57 @@
 # DocAppoint Server
 
-A RESTful API server for the **DocAppoint** Doctor Appointment Booking System. Built with Node.js, Express, TypeScript, and MongoDB.
+**Backend API for DocAppoint (Cliniqo) - Doctor Appointment Booking System**
 
-🌐 **Live Server URL:** `https://docappoint-server.vercel.app`
+A robust, scalable RESTful API built with **Node.js**, **Express**, and **TypeScript** that powers the DocAppoint platform.
 
----
+**Live Server:** [https://docappoint-server.vercel.app](https://docappoint-server.vercel.app)
 
-## Features
-
-- 🏥 Fetch all available doctors with search and filter support
-- ⭐ Get top 3 highest-rated doctors dynamically
-- 📅 Book, view, update, and delete appointments securely
-- 🔐 JWT-based authentication with protected routes
-- 🚀 Built with TypeScript for type safety and scalability
+**Frontend:** [https://doc-appoint-client-pi.vercel.app](https://doc-appoint-client-pi.vercel.app)
 
 ---
+
+## ✨ Key Features
+
+- **Doctor Management** — Fetch all doctors with search and filtering
+- **Top Doctors** — Get highest-rated specialists instantly
+- **Appointment System** — Complete booking, viewing, and cancellation flow
+- **Secure Authentication** — JWT-based authentication with protected routes
+- **Type Safety** — Fully built with TypeScript
+- **MongoDB Integration** — Efficient database operations
 
 ## Tech Stack
 
 - **Runtime:** Node.js
 - **Framework:** Express.js
 - **Language:** TypeScript
-- **Database:** MongoDB (Native Driver)
-- **Auth:**Better-Auth, JWT (jsonwebtoken)
+- **Database:** MongoDB
+- **Authentication:** JWT
+- **Deployment:** Vercel
+
+## 📡 API Endpoints
+
+All API routes are prefixed with `/api`
+
+### Doctors
+- `GET /api/doctors` — Get all doctors (supports search & filters)
+- `GET /api/top-doctors` — Get top rated doctors
+- `GET /api/doctors/:id` — Get single doctor by ID
+
+### Appointments
+- `POST /api/create-appointment` — Book new appointment (Protected)
+- `GET /api/appointments/:id` — Get appointment details (Protected)
+- `PATCH /api/appointments/:id` — Update appointment (Protected)
+- `DELETE /api/appointments/:id` — Cancel appointment (Protected)
+
+> Protected routes require a valid `Authorization` header with JWT token.
 
 ---
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js v18+
-- MongoDB Atlas account
-- `.env` file configured
-
 ### Installation
 
 ```bash
-git clone https://github.com/Rakib-dhali/docappoint-server.git
-cd docappoint-server
+git clone https://github.com/Rakib-dhali/DocAppoint-server.git
+cd DocAppoint-server
 npm install
-```
-
-### Environment Variables
-
-Create a `.env` file in the root:
-
-```env
-MONGO_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/doc-appoint
-JWT_SECRET=your_jwt_secret
-CLIENT_URL=http://localhost:5173
-PORT=4000
-```
-
-### Run Development Server
-
-```bash
-npm run server
-```
-
----
-
-## API Endpoints
-
-### Doctors
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/doctors` | Get all doctors |
-| GET | `/top-doctors` | Get top 3 rated doctors |
-| GET | `/doctors/:id` | Get single doctor by ID |
-
-### Appointments
-
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| POST | `/create-appointment` | Book a new appointment | ✅ |
-| GET | `/appointments/:id` | Get appointment by ID | ✅ |
-| PATCH | `/appointments/:id` | Update an appointment | ✅ |
-| DELETE | `/appointments/:id` | Delete an appointment | ✅ |
-
-> ✅ Protected routes require a valid JWT token in cookies or Authorization header.
-
----
-
-## Folder Structure
-
-```
-DocAppoint/
-├── src/
-│   ├── db/
-│   │   └── db.ts
-│   ├── routes/
-│   │   └── routes.ts
-│   ├── controllers/
-│   │   └── controller.ts
-│   ├── middleware/
-│   │   └── verifyToken.ts
-│   └── app.ts
-├── server.ts
-├── .env
-├── package.json
-└── tsconfig.json
-```
-
----
-
-## License
-
-MIT © [Rakib Dhali](https://github.com/Rakib-dhali)
