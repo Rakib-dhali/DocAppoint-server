@@ -24,8 +24,8 @@ export async function getTopRatedDoctors(req: Request, res: Response) {
 }
 
 export async function getDoctorById(req: Request, res: Response) {
-  const { id } = req.params;
-  const doctor = await doctorsCollections.findOne({ id: id });
+  const  id  = req.params.id as string;
+  const doctor = await doctorsCollections.findOne({ _id: new ObjectId(id) });
 
   if (!doctor) {
     res.status(404).json({ message: "Doctor not found" });
@@ -40,17 +40,27 @@ export async function createAppointment(req: Request, res: Response) {
     res.status(201).json(appointments);
 }
 
-export async function getAppointmentById(req: Request, res: Response) {
-    const appointment = await appointmentCollection.findOne({ _id: new ObjectId(req.params.id as string)});
+export async function getAppointmentByEmailId(req: Request, res: Response) {
+  try {
+    const email = req.params.emailId;
 
-    if (!appointment) {
-      res.status(404).json({ message: "Appointment not found" });
-      return;
-    }
+    // Use .find() and convert to an array to get all bookings for this user
+    const appointments = await appointmentCollection
+      .find({ patientEmail: email })
+      .toArray();
 
-    res.status(200).json(appointment);
+    // Always send back an array, even if it's empty [], so the frontend map doesn't crash
+    res.status(200).json(appointments);
+  } catch (error) {
+    console.error("Error fetching appointments by email:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
 
+export async function  getAllAppointments(req: Request, res: Response) {
+  const appointments = await appointmentCollection.find({}).toArray();
+  res.status(200).json(appointments);
+}
 export async function updateAppointment(req: Request, res: Response) {
   const id = req.params.id as string;
   const result = await appointmentCollection.updateOne(
