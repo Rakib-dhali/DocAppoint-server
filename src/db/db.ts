@@ -6,7 +6,13 @@ dotenv.config();
 
 import { MongoClient, ServerApiVersion } from "mongodb";
 
-export const client = new MongoClient(process.env.MONGO_URI!, {
+const mongoUri = process.env.MONGO_URI as string;
+
+if (!mongoUri) {
+  console.warn("WARNING: MONGO_URI not set. Database operations will fail.");
+}
+
+export const client = new MongoClient(mongoUri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -15,6 +21,9 @@ export const client = new MongoClient(process.env.MONGO_URI!, {
 });
 
 const connectDB = async () => {
+  if (!mongoUri) {
+    throw new Error("MONGO_URI environment variable is not set");
+  }
   await client.connect();
   console.log("mongoDb connected");
 };
