@@ -1,16 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { jwtVerify, createRemoteJWKSet } from "jose";
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: unknown;
-    }
-  }
-}
-
 const JWKS = createRemoteJWKSet(
-  new URL("https://doc-appoint-client-pi.vercel.app/api/auth/jwks")
+  new URL(`${process.env.CLIENT_URL}/api/auth/jwks`)
 );
 
 export const verifyToken = async (
@@ -23,14 +15,10 @@ export const verifyToken = async (
 
     // 1. Get token from header
     const authHeader = req.headers.authorization;
+    console.log("auth header", authHeader)
 
     if (authHeader?.startsWith("Bearer ")) {
       token = authHeader.split(" ")[1];
-    }
-
-    // 2. Or from cookie
-    if (!token && req.cookies?.token) {
-      token = req.cookies.token;
     }
 
     // 3. No token → reject
@@ -41,12 +29,8 @@ export const verifyToken = async (
     }
 
     // 4. Verify JWT
-    const { payload } = await jwtVerify(token, JWKS, {
-      algorithms: ["RS256"],
-    });
-
-    // 5. Attach user
-    req.user = payload;
+    const { payload } = await jwtVerify(token, JWKS);
+    console.log(payload)
 
     next();
   } catch (err) {
