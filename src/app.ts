@@ -8,7 +8,13 @@ import cookieParser from "cookie-parser";
 
 export const app = express();
 
-await connectDB();
+try {
+  await connectDB();
+  console.log("Connected to MongoDB");
+} catch (error) {
+  console.error("Failed to connect to MongoDB:", error);
+}
+
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
