@@ -1,10 +1,10 @@
-# DocAppoint Server
+# Cliniqo Server
 
-**Backend API for DocAppoint (Cliniqo) - Doctor Appointment Booking System**
+**Backend API for (Cliniqo) - Doctor Appointment Booking System**
 
 A robust, scalable RESTful API built with **Node.js**, **Express**, and **TypeScript** that powers the DocAppoint platform.
 
-**Live Server:** [https://docappoint-server.vercel.app](https://docappoint-server.vercel.app)
+**Live Server:** [https://doc-appoint-server-zebt.vercel.app/](https://doc-appoint-server-zebt.vercel.app/)
 
 **Frontend:** [https://doc-appoint-client-pi.vercel.app](https://doc-appoint-client-pi.vercel.app)
 
