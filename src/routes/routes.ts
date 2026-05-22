@@ -11,8 +11,8 @@ routes.get("/doctors/:id", getDoctorById);
 routes.post("/create-appointment", createAppointment);
 routes.get("/appointments", getAllAppointments);
 routes.get("/appointments/:emailId",verifyToken, getAppointmentByEmailId);
-routes.patch("/appointments/:id", updateAppointment);
-routes.delete("/appointments/:id", deleteAppointment);
+routes.patch("/appointments/:id",verifyToken, updateAppointment);
+routes.delete("/appointments/:id",verifyToken, deleteAppointment);
 
 
 
