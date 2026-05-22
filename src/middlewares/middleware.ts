@@ -1,15 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { jwtVerify, createRemoteJWKSet } from "jose";
 
-console.log(process.env.BETTER_AUTH_URL)
-
 export const verifyToken = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    // Lazy init — env vars are ready by the time this runs
     const JWKS = createRemoteJWKSet(
       new URL(`${process.env.BETTER_AUTH_URL}/api/auth/jwks`)
     );

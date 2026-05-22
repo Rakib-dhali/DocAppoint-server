@@ -44,12 +44,10 @@ export async function getAppointmentByEmailId(req: Request, res: Response) {
   try {
     const email = req.params.emailId;
 
-    // Use .find() and convert to an array to get all bookings for this user
     const appointments = await appointmentCollection
       .find({ patientEmail: email })
       .toArray();
 
-    // Always send back an array, even if it's empty [], so the frontend map doesn't crash
     res.status(200).json(appointments);
   } catch (error) {
     console.error("Error fetching appointments by email:", error);
